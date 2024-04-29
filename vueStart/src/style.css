@@ -3,11 +3,26 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 80vh;
   background: linear-gradient(137deg, #202020 17.24%, #101010 97.08%);
   justify-content: center;
+  padding: 10vh 0px;
 }
 
 #app {
   margin: 0 auto;
+}
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #59eab291;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #202020;
 }

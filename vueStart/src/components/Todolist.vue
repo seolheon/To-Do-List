@@ -1,21 +1,27 @@
 <template>
     <div class="todo-list-container">
         <section class="add-task-bar">
-            <input v-model="inputValue" class="add-task" type="text" placeholder="Enter task"/>
+            <input v-model="inputValue" class="add-task" type="text" placeholder="Enter task" @keydown.enter="createTask"/>
             <div @click="createTask" class="add-button">
                 <svg class="add-icon" width="25" height="26" viewBox="0 0 25 26" fill="#606060" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.5 0.745117C10.0277 0.745117 7.61099 1.46385 5.55538 2.81044C3.49976 4.15703 1.89761 6.07098 0.951511 8.31027C0.00541605 10.5496 -0.242126 13.0136 0.24019 15.3908C0.722505 17.768 1.91301 19.9517 3.66117 21.6655C5.40933 23.3794 7.63661 24.5466 10.0614 25.0194C12.4861 25.4923 14.9995 25.2496 17.2835 24.3221C19.5676 23.3945 21.5199 21.8238 22.8934 19.8085C24.2669 17.7932 25 15.4238 25 13C25 11.3907 24.6767 9.7971 24.0485 8.31027C23.4203 6.82344 22.4996 5.47247 21.3388 4.33449C20.1781 3.19652 18.8001 2.29383 17.2835 1.67797C15.767 1.0621 14.1415 0.745117 12.5 0.745117ZM12.5 22.8039C10.5222 22.8039 8.58879 22.2289 6.9443 21.1517C5.29981 20.0744 4.01809 18.5432 3.26121 16.7518C2.50433 14.9604 2.3063 12.9891 2.69215 11.0874C3.078 9.18559 4.03041 7.4387 5.42894 6.0676C6.82746 4.6965 8.60929 3.76276 10.5491 3.38448C12.4889 3.00619 14.4996 3.20034 16.3268 3.94238C18.1541 4.68441 19.7159 5.941 20.8147 7.55325C21.9135 9.1655 22.5 11.061 22.5 13C22.5 15.6002 21.4464 18.0938 19.5711 19.9324C17.6957 21.771 15.1522 22.8039 12.5 22.8039ZM17.5 11.7745H13.75V8.09806C13.75 7.77304 13.6183 7.46133 13.3839 7.2315C13.1495 7.00168 12.8315 6.87257 12.5 6.87257C12.1685 6.87257 11.8505 7.00168 11.6161 7.2315C11.3817 7.46133 11.25 7.77304 11.25 8.09806V11.7745H7.5C7.16848 11.7745 6.85054 11.9036 6.61612 12.1335C6.3817 12.3633 6.25 12.675 6.25 13C6.25 13.325 6.3817 13.6367 6.61612 13.8666C6.85054 14.0964 7.16848 14.2255 7.5 14.2255H11.25V17.902C11.25 18.227 11.3817 18.5387 11.6161 18.7685C11.8505 18.9984 12.1685 19.1275 12.5 19.1275C12.8315 19.1275 13.1495 18.9984 13.3839 18.7685C13.6183 18.5387 13.75 18.227 13.75 17.902V14.2255H17.5C17.8315 14.2255 18.1495 14.0964 18.3839 13.8666C18.6183 13.6367 18.75 13.325 18.75 13C18.75 12.675 18.6183 12.3633 18.3839 12.1335C18.1495 11.9036 17.8315 11.7745 17.5 11.7745Z"/>
                 </svg>
             </div>
 
-            <div class="filter-button">
+            <div class="filter-button" @mouseover="isMenuOpen=true" @mouseleave="isMenuOpen=false">
                 <svg class="filter-icon" width="25" height="26" viewBox="0 0 25 26" fill="#606060" xmlns="http://www.w3.org/2000/svg">
                     <path d="M21.25 0.725464H3.75C2.75544 0.725464 1.80161 1.11281 1.09835 1.80228C0.395088 2.49175 2.26098e-07 3.42687 2.26098e-07 4.40193V5.83576C-0.000179009 6.34181 0.106208 6.84246 0.3125 7.30634V7.37987C0.4891 7.77322 0.73924 8.13068 1.05 8.4338L8.75 15.9338V24.0098C8.74957 24.218 8.80329 24.423 8.90609 24.6052C9.00888 24.7875 9.15736 24.9411 9.3375 25.0514C9.53642 25.1723 9.76597 25.236 10 25.2353C10.1957 25.2341 10.3883 25.1879 10.5625 25.1005L15.5625 22.6495C15.7686 22.5476 15.942 22.3918 16.0633 22.1993C16.1847 22.0068 16.2493 21.7851 16.25 21.5588V15.9338L23.9 8.4338C24.2108 8.13068 24.4609 7.77322 24.6375 7.37987V7.30634C24.861 6.84609 24.9845 6.34529 25 5.83576V4.40193C25 3.42687 24.6049 2.49175 23.9016 1.80228C23.1984 1.11281 22.2446 0.725464 21.25 0.725464ZM14.1125 14.5612C13.9966 14.6758 13.905 14.8116 13.8428 14.9609C13.7806 15.1102 13.749 15.2701 13.75 15.4313V20.799L11.25 22.0245V15.4313C11.2509 15.2701 11.2194 15.1102 11.1572 14.9609C11.095 14.8116 11.0033 14.6758 10.8875 14.5612L4.2625 8.0784H20.7375L14.1125 14.5612ZM22.5 5.62742H2.5V4.40193C2.5 4.07691 2.6317 3.76521 2.86612 3.53538C3.10054 3.30556 3.41848 3.17644 3.75 3.17644H21.25C21.5815 3.17644 21.8995 3.30556 22.1339 3.53538C22.3683 3.76521 22.5 4.07691 22.5 4.40193V5.62742Z"/>
                 </svg>
+                <div v-show="isMenuOpen" class="filter-menu" @mouseover.stop>
+                    <div :class="filterFlag === 'all' ? 'active' : 'button'"  @click="setFilter('all')">All</div>
+                    <div :class="filterFlag === 'important' ? 'active' : 'button'"  @click="setFilter('important')">Important</div>
+                    <div :class="filterFlag === 'completed' ? 'active' : 'button'"  @click="setFilter('completed')">Completed</div>
+                    <div :class="filterFlag === 'uncompleted' ? 'active' : 'button'"  @click="setFilter('uncompleted')">Uncompleted</div>
+                </div>
             </div>
         </section>
         <ul class="task-list">
-            <li v-for="task of getSortedTasks()" :key="task.id" class="todo-item" >
+            <li v-for="task in getFilteredTasks" :key="task.id" class="todo-item" >
               <div class="todo-item-content" :class="{ 'important':task.isImportant & !task.isComplete, 'completed': task.isComplete }">
                 <p v-if="!task.isEdit" class="todo-item-text" >
                   {{ task.description }}
@@ -53,12 +59,10 @@
                 </div>
               </div>
 
-              <div class="drag-me">
-
-                <svg class="drag-me-icon" width="21" height="13" viewBox="0 0 21 13" fill="#282828"xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1.10094 2.55254H19.0283C19.2924 2.55254 19.5457 2.44857 19.7325 2.2635C19.9193 2.07843 20.0242 1.82743 20.0242 1.5657C20.0242 1.30397 19.9193 1.05297 19.7325 0.867897C19.5457 0.682828 19.2924 0.578857 19.0283 0.578857H1.10094C0.836797 0.578857 0.58347 0.682828 0.396691 0.867897C0.209912 1.05297 0.10498 1.30397 0.10498 1.5657C0.10498 1.82743 0.209912 2.07843 0.396691 2.2635C0.58347 2.44857 0.836797 2.55254 1.10094 2.55254ZM19.0283 10.4473H1.10094C0.836797 10.4473 0.58347 10.5512 0.396691 10.7363C0.209912 10.9214 0.10498 11.1724 0.10498 11.4341C0.10498 11.6958 0.209912 11.9469 0.396691 12.1319C0.58347 12.317 0.836797 12.421 1.10094 12.421H19.0283C19.2924 12.421 19.5457 12.317 19.7325 12.1319C19.9193 11.9469 20.0242 11.6958 20.0242 11.4341C20.0242 11.1724 19.9193 10.9214 19.7325 10.7363C19.5457 10.5512 19.2924 10.4473 19.0283 10.4473ZM19.0283 5.51307H1.10094C0.836797 5.51307 0.58347 5.61704 0.396691 5.80211C0.209912 5.98718 0.10498 6.23818 0.10498 6.49991C0.10498 6.76164 0.209912 7.01264 0.396691 7.19771C0.58347 7.38278 0.836797 7.48675 1.10094 7.48675H19.0283C19.2924 7.48675 19.5457 7.38278 19.7325 7.19771C19.9193 7.01264 20.0242 6.76164 20.0242 6.49991C20.0242 6.23818 19.9193 5.98718 19.7325 5.80211C19.5457 5.61704 19.2924 5.51307 19.0283 5.51307Z"/>
+              <div class="remove-button" @click="deleteTask(task.id)">
+                <svg class="remove-icon" width="16" height="16" viewBox="0 0 16 16" fill="#353535" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.87818 7.99886L15.606 2.28357C15.8568 2.03271 15.9977 1.69246 15.9977 1.33769C15.9977 0.98291 15.8568 0.642664 15.606 0.391799C15.3552 0.140935 15.015 0 14.6602 0C14.3055 0 13.9653 0.140935 13.7145 0.391799L8 6.12041L2.28552 0.391799C2.03469 0.140935 1.6945 -2.64329e-09 1.33977 0C0.985044 2.64329e-09 0.644846 0.140935 0.394017 0.391799C0.143188 0.642664 0.00227327 0.98291 0.00227327 1.33769C0.00227327 1.69246 0.143188 2.03271 0.394017 2.28357L6.12182 7.99886L0.394017 13.7142C0.269166 13.838 0.17007 13.9853 0.102444 14.1477C0.0348177 14.31 0 14.4842 0 14.66C0 14.8359 0.0348177 15.01 0.102444 15.1724C0.17007 15.3347 0.269166 15.4821 0.394017 15.6059C0.517848 15.7308 0.665174 15.8299 0.827496 15.8975C0.989818 15.9652 1.16392 16 1.33977 16C1.51562 16 1.68972 15.9652 1.85204 15.8975C2.01437 15.8299 2.16169 15.7308 2.28552 15.6059L8 9.87731L13.7145 15.6059C13.8383 15.7308 13.9856 15.8299 14.148 15.8975C14.3103 15.9652 14.4844 16 14.6602 16C14.8361 16 15.0102 15.9652 15.1725 15.8975C15.3348 15.8299 15.4822 15.7308 15.606 15.6059C15.7308 15.4821 15.8299 15.3347 15.8976 15.1724C15.9652 15.01 16 14.8359 16 14.66C16 14.4842 15.9652 14.31 15.8976 14.1477C15.8299 13.9853 15.7308 13.838 15.606 13.7142L9.87818 7.99886Z" />
                 </svg>
-
               </div>
             </li>
         </ul>
@@ -66,8 +70,8 @@
 </template>
   
 <script setup>
-    import { ref } from 'vue'
-
+    import { ref, computed } from 'vue'
+    const isMenuOpen = ref(false);
     const importantTasks = ref([]);
     const completedTasks = ref([]);
     const todoList = ref([
@@ -106,7 +110,7 @@
         if (task.isImportant){
             const index = importantTasks.value.indexOf(task);
             importantTasks.value.splice(index, 1);
-            todoList.value.push(task);
+            completedTasks.value.push(task);
         }
         else{
             const index = todoList.value.indexOf(task);
@@ -116,8 +120,8 @@
     } else {
 
         if (task.isImportant){
-            const index = todoList.value.indexOf(task);
-            todoList.value.splice(index, 1);
+            const index = completedTasks.value.indexOf(task);
+            completedTasks.value.splice(index, 1);
             importantTasks.value.unshift(task);
         }
         else{
@@ -149,24 +153,34 @@ const getSortedTasks = () => {
     return sortedTasks;
 };
 
-const filterTasks = (filterType) => {
-    switch (filterType) {
-      case 'all':
-        return todoList.value;
-      case 'important':
-        return todoList.value.filter(task => task.isImportant);
-      case 'completed':
-        return todoList.value.filter(task => task.isComplete);
-      case 'uncompleted':
-        return todoList.value.filter(task => !task.isComplete);
-      default:
-        return todoList.value;
-    }
-  };
+const filterFlag = ref('all');
 
-    const deleteTask = (id) => (
-        todoList.value = todoList.value.filter(el => el.id != id)
-    )
+const setFilter = (filter) => {
+      filterFlag.value = filter;
+    };
+
+const getFilteredTasks = computed(() => {
+    const sortedTasks = getSortedTasks();
+    switch (filterFlag.value) {
+      case 'all':
+        return sortedTasks;
+      case 'important':
+        return importantTasks.value;
+      case 'completed':
+        return completedTasks.value;
+      case 'uncompleted':
+        return todoList.value;
+      default:
+        return sortedTasks;
+    }
+  });
+
+
+    const deleteTask = (id) => {
+        todoList.value = todoList.value.filter(el => el.id != id);
+        importantTasks.value = importantTasks.value.filter(el => el.id != id);
+        completedTasks.value = completedTasks.value.filter(el => el.id != id);
+    }
 
     const inputValue = ref('') 
 
@@ -180,6 +194,7 @@ const filterTasks = (filterType) => {
         }
         if (inputValue.value !== ''){
             todoList.value.push(newTask)
+            inputValue.value = '';
         }
     }
 
@@ -191,8 +206,9 @@ const filterTasks = (filterType) => {
     background-color: #282828;
     display: flex;
     flex-direction: column;
-    padding: 35px 40px ;
+    padding: 30px 40px;
     box-shadow: 0px 0px 7px 5px rgba(0, 0, 0, 0.5);
+    user-select: none;
   }
 
   .add-task-bar {
@@ -222,7 +238,6 @@ const filterTasks = (filterType) => {
     border: none;
     flex-grow: 1;
     padding-left: 2%;
-    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.3);
   }
 
   .add-task:focus,
@@ -248,6 +263,7 @@ const filterTasks = (filterType) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
   }
 
@@ -264,6 +280,38 @@ const filterTasks = (filterType) => {
     box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 0.2);
 
   }
+
+  .filter-menu {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     position: absolute;
+     background-color: #151515;
+     border: 1px solid #000;
+     border-radius: 4px;
+     padding: 15px;
+     gap: 10px;
+     z-index: 1;
+     left: 50px;
+     box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .filter-menu .button {
+     background-color: #404040;
+     border: 1px solid #000;
+     border-radius: 4px;
+     text-align: center;
+     padding: 10px;
+     color: #fff;
+     font-weight: 600;
+     font: 500 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
+    }
+
+    .filter-menu .button:hover {
+     transition: background-color 0.3s ease;
+     background-color: #202020;
+     color: #fff;
+    }
 
   .important-button :hover ,
   .checkbox :hover, 
@@ -287,7 +335,8 @@ const filterTasks = (filterType) => {
   
   .task-list{
     padding: 0px;
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
   }
 
   .todo-item {
@@ -320,13 +369,23 @@ const filterTasks = (filterType) => {
     align-self: right;
   }
 
-  .drag-me {
+  .remove-button {
     border-radius: 0 10px 10px 0;
     background-color: #404040;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 35px
+  }
+
+  .remove-button:hover {
+    transition: background-color 0.5s ease;
+    background-color: #B07171;
+  }
+
+  .remove-button:hover svg{
+    transition: fill 0.5s ease;
+    fill: #8e5151;
   }
 
     .completed .todo-item-text {
@@ -336,7 +395,7 @@ const filterTasks = (filterType) => {
   }
 
   .completed {
-    background-color: #404040;
+    background-color: #353535;
   }
 
   .important .important-icon {
@@ -355,7 +414,7 @@ const filterTasks = (filterType) => {
   }
 
   .important  {
-    background-color: #57b696;
+    background-color: #71988b;
   }
 
   .important .todo-item-text  {
@@ -363,10 +422,53 @@ const filterTasks = (filterType) => {
     font-weight: 600;
   }
 
+  .important .edit-task  {
+    color: #202020;
+    background-color: #add9ca;
+    font-weight: 600;
+  }
+
+  .important ~.remove-button {
+    background-color: #336a57;
+  }
+
+  .important ~.remove-button svg {
+    fill: #2c5749;
+  }
+
+  .important ~.remove-button:hover svg {
+    fill: #915954;
+  }
+
+  .important ~.remove-button:hover {
+    background-color: #b3716b;
+  }
+
   .important .important-button :hover {
     transition: fill 0.2s ease;
     fill: #f3ecb3;
     stroke: none;
   } 
+
+  .active {
+    background-color: #202020;
+     border: 1px solid #000;
+     border-radius: 4px;
+     text-align: center;
+     padding: 10px;
+     color: #8b8b8b;
+     font-weight: 600;
+     font: 500 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
+  }
+
+  .add-button:active,
+  .filter-button:active {
+    transition: background-color 4s ease;
+    background-color: #181818;
+    transition: box-shadow 4s ease;
+    box-shadow: none;
+    transition: transform 4s ease;
+    transform: translateY(5px);
+  }
 
 </style>
