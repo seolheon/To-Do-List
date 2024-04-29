@@ -299,8 +299,7 @@ const getFilteredTasks = computed(() => {
      text-align: center;
      padding: 10px;
      color: #fff;
-     font-weight: 600;
-     font: 500 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
+     font: 400 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
     }
 
     .filter-menu .button:hover {
@@ -350,7 +349,7 @@ const getFilteredTasks = computed(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    font: 500 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
+    font: 400 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
   }
   
   .todo-item-text {
@@ -387,7 +386,7 @@ const getFilteredTasks = computed(() => {
     .completed .todo-item-text {
     text-decoration: line-through;
     color: #000000;
-    font-weight: 400;
+    font: 600 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
   }
 
   .completed {
@@ -415,13 +414,14 @@ const getFilteredTasks = computed(() => {
 
   .important .todo-item-text  {
     color: #202020;
-    font-weight: 600;
+    font-weight: 800;
+    font: 800 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
   }
 
   .important .edit-task  {
     color: #202020;
     background-color: #add9ca;
-    font-weight: 600;
+    font: 600 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
   }
 
   .important ~.remove-button {
@@ -453,8 +453,7 @@ const getFilteredTasks = computed(() => {
      text-align: center;
      padding: 10px;
      color: #8b8b8b;
-     font-weight: 600;
-     font: 500 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
+     font: 800 16px Montserrat Alternates, -apple-system, Roboto, Helvetica, sans-serif;
   }
 
   .add-button:active,
